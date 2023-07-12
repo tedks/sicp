@@ -1,0 +1,16 @@
+;;SICP 2nd Edition Chapter 1 Exercise 33
+
+(define (filtered-accumulate combiner null-value filter? term a next b)
+  (if (> a b)
+      null-value
+      (combiner (if (filter? a) a null-value)
+		(filtered-accumulate combiner null-value filter? term (next a)
+				     next b))))
+
+(define (sum-of-prime-squares a b)
+  (define (sops-term n) (* n n))
+  (define (sops-next n) (+ n 1))    
+  (filtered-accumulate + 0 prime? sops-term a sops-next b))
+
+(sum-of-prime-squares 1 100)
+
